@@ -2,7 +2,6 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const BadRequestError = require('../errors/BadRequestError');
-const NotFoundError = require('../errors/NotFoundError');
 const SameEmailError = require('../errors/SameEmailError');
 const UnauthorizedError = require('../errors/UnauthorizedError');
 require('dotenv').config();
@@ -33,11 +32,21 @@ module.exports.createUser = (req, res, next) => {
     });
 };
 
+module.exports.getUserInfo = (req, res, next) => {
+  User.findById(req.user._id)
+    .then((user) => res.status(200).send(user))
+    .catch((err) => {
+      if (err.name === 'CastError') {
+        next(new BadRequestError('Переданы некорректные данные.'));
+      }
+      next(err);
+    });
+};
+
 module.exports.updateProfile = (req, res, next) => {
   const { name, email } = req.body;
-  const owner = req.user._id;
   User.findByIdAndUpdate(
-    owner,
+    req.user._id,
     { name, email },
     { new: true, runValidators: true },
   )

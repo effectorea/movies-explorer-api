@@ -60,7 +60,6 @@ module.exports.movieValidation = celebrate({
       }
       return helpers.message('Неправильный формат ссылки');
     }),
-    owner: Joi.string().required(),
     movieId: Joi.number().required(),
     nameRU: Joi.string().required(),
     nameEN: Joi.string().required(),
