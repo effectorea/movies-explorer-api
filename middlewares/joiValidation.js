@@ -2,7 +2,7 @@ const { celebrate, Joi } = require('celebrate');
 const validator = require('validator');
 
 module.exports.userValidation = celebrate({
-  body: Joi.object().keys({
+  body: Joi.object().required().keys({
     name: Joi.string().min(2).max(30),
     email: Joi.string().required().email(),
     password: Joi.string().required().min(6),
@@ -11,6 +11,7 @@ module.exports.userValidation = celebrate({
 
 module.exports.loginValidation = celebrate({
   body: Joi.object().keys({
+    name: Joi.string().required().min(2).max(30),
     email: Joi.string().required().email(),
     password: Joi.string().required().min(6),
   }),
