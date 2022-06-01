@@ -5,10 +5,10 @@ const { login, createUser } = require('../controllers/users');
 const { userValidation, loginValidation } = require('../middlewares/joiValidation');
 const auth = require('../middlewares/auth');
 
-router.use(auth);
-
-router.post('/signin', loginValidation, login);
 router.post('/signup', userValidation, createUser);
+router.post('/signin', loginValidation, login);
+
+router.use(auth);
 
 router.get('/me', getUserInfo);
 router.patch('/me', userProfileValidation, updateProfile);
