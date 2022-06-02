@@ -18,7 +18,7 @@ module.exports.createUser = (req, res, next) => {
       email,
       password: hash,
     }))
-    .then((user) => res.status(200).send(user))
+    .then((user) => res.status(200).send({ _id: user._id, email: user.email, name: user.name }))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new BadRequestError('Переданы некорректные данные.'));

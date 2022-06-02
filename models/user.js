@@ -1,3 +1,4 @@
+/* eslint-disable func-names */
 const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 const { isEmail } = require('validator');

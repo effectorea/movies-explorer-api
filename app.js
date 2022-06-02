@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const express = require('express');
 const helmet = require('helmet');
 const mongoose = require('mongoose');
@@ -8,7 +9,6 @@ const { errors } = require('celebrate');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const router = require('./routes/index');
 require('dotenv').config();
-const NotFoundError = require('./errors/NotFoundError');
 const errorHandler = require('./middlewares/errorHandler');
 
 const { NODE_ENV, BASE_URL } = process.env;
@@ -35,10 +35,6 @@ app.use(router);
 app.use(errorLogger);
 
 app.use(errors());
-
-app.use('/', (req, res, next) => {
-  next(new NotFoundError('Запрашиваемый ресурс не найден'));
-});
 
 app.use(errorHandler);
 
