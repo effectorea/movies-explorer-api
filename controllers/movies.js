@@ -67,3 +67,37 @@ module.exports.deleteMovie = (req, res, next) => {
       }
     });
 };
+
+module.exports.likeMovie = (req, res, next) => {
+  const { movieId } = req.params;
+  Movie.findByIdAndUpdate(movieId)
+    .then((movie) => {
+      if (!movie) {
+        return new NotFoundError('Нет фильма по заданному id');
+      }
+      return res.status(200).send(movie);
+    })
+    .catch((err) => {
+      if (err.name === 'CastError') {
+        next(new BadRequestError('Переданы некорректные данные.'));
+      }
+      next(err);
+    });
+};
+
+module.exports.dislikeMovie = (req, res, next) => {
+  const { movieId } = req.params;
+  Movie.findByIdAndUpdate(movieId)
+    .then((movie) => {
+      if (!movie) {
+        return new NotFoundError('Нет фильма по заданному id');
+      }
+      return res.status(200).send(movie);
+    })
+    .catch((err) => {
+      if (err.name === 'CastError') {
+        next(new BadRequestError('Переданы некорректные данные.'));
+      }
+      next(err);
+    });
+};

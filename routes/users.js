@@ -10,7 +10,7 @@ router.post('/signin', loginValidation, login);
 
 router.use(auth);
 
-router.get('/me', getUserInfo);
-router.patch('/me', userProfileValidation, updateProfile);
+router.get('/users/me', getUserInfo);
+router.patch('/users/me', userProfileValidation, updateProfile);
 
 module.exports = router;
